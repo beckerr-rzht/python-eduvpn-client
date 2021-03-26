@@ -87,11 +87,11 @@ RENEWAL_ALLOW_FRACTION = .8
 
 def get_validity_text(validity: Optional[Validity]):
     if validity is None:
-        return _("Valid for <b>unknown</b>")  # type: ignore
+        return gettext("Valid for <b>unknown</b>")  # type: ignore
     expiry = validity.end
     now = datetime.utcnow()
     if expiry <= now:
-        return _("This session has expired")  # type: ignore
+        return gettext("This session has expired")  # type: ignore
     delta = expiry - now
     days = delta.days
     hours = delta.seconds // 3600
@@ -226,7 +226,7 @@ class EduVpnGui:
             server_image_component.hide()
 
         if getattr(server, 'support_contact', []):
-            support_text = _("Support:") + "\n" + "\n".join(map(link_markup, server.support_contact))
+            support_text = gettext("Support:") + "\n" + "\n".join(map(link_markup, server.support_contact))
             self.set_markup_text('supportLabel', support_text)
             self.show_component('supportLabel', True)
         else:
@@ -354,8 +354,8 @@ class EduVpnGui:
     @transition_edge_callback(ENTER, interface_state.OAuthRefreshToken)
     def enter_OAuthRefreshToken(self, old_state, new_state):
         self.show_message_page(
-            _("Finishing Authorization"),
-            _("The authorization token is being finished."),
+            gettext("Finishing Authorization"),
+            gettext("The authorization token is being finished."),
         )
 
     @transition_edge_callback(EXIT, interface_state.OAuthRefreshToken)
@@ -365,8 +365,8 @@ class EduVpnGui:
     @transition_edge_callback(ENTER, interface_state.LoadingServerInformation)
     def enter_LoadingServerInformation(self, old_state, new_state):
         self.show_message_page(
-            _("Loading"),
-            _("The server details are being loaded."),
+            gettext("Loading"),
+            gettext("The server details are being loaded."),
         )
 
     @transition_edge_callback(EXIT, interface_state.LoadingServerInformation)
@@ -452,8 +452,8 @@ class EduVpnGui:
     @transition_edge_callback(ENTER, interface_state.ConfiguringConnection)
     def enter_ConfiguringConnection(self, old_state, new_state):
         self.show_message_page(
-            _("Configuring"),
-            _("Your connection is being configured."),
+            gettext("Configuring"),
+            gettext("Your connection is being configured."),
         )
 
     @transition_edge_callback(EXIT, interface_state.ConfiguringConnection)
@@ -508,7 +508,7 @@ class EduVpnGui:
         self.show_component('messagePage', True)
         self.show_component('messageLabel', True)
         self.show_component('messageText', True)
-        self.set_text('messageLabel', _("Error"))
+        self.set_text('messageLabel', gettext("Error"))
         self.set_text('messageText', new_state.message)
         self.show_component('messageButton', True)
         self.builder.get_object('messageButton').set_label(_("Ok"))
